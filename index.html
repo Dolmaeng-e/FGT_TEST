@@ -2,18 +2,637 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-</head>
-<body>
-    <h1>AntiVirus Test</h1>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Test Portal</title>
 
-    <a href="test.txt" download>Hash.txt</a>
-    <br>
-    <a href="Virus.txt" download>Virus.txt 다운로드</a>
-    <br>
-    <a href="CDR.pdf" download>CDR.pdf 다운로드</a>
-    <br>
-    <a href="CDR.xlsx" download>CDR.xlsx 다운로드</a>
-    <br>
-    <a href="CDR.pptx" download>CDR.pptx 다운로드</a>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                "Pretendard",
+                "Noto Sans KR",
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
+            background: #07111f;
+            color: #d9e7f5;
+            min-height: 100vh;
+        }
+
+        /* Background grid */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(43, 124, 173, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(43, 124, 173, 0.045) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .app {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 42px;
+            border-bottom: 1px solid #183049;
+            background: rgba(5, 15, 28, 0.92);
+            backdrop-filter: blur(10px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .shield {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            color: #31d7b0;
+            background: rgba(49, 215, 176, 0.08);
+            border: 1px solid rgba(49, 215, 176, 0.35);
+            border-radius: 9px;
+            font-size: 20px;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            color: #f1f7fc;
+        }
+
+        .brand-text span {
+            display: block;
+            margin-top: 2px;
+            color: #617b93;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #75d9bc;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #35d6a8;
+            box-shadow: 0 0 12px #35d6a8;
+        }
+
+        /* Main */
+        main {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 55px 28px 70px;
+        }
+
+        .breadcrumb {
+            color: #547089;
+            font-size: 12px;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: #f2f7fb;
+        }
+
+        .hero p {
+            margin: 12px 0 0;
+            color: #7790a6;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .case-id {
+            padding: 12px 16px;
+            border: 1px solid #1c3851;
+            background: #0a1828;
+            border-radius: 8px;
+            text-align: right;
+            min-width: 190px;
+        }
+
+        .case-id small {
+            display: block;
+            color: #56718a;
+            font-size: 10px;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .case-id code {
+            color: #62cce7;
+            font-size: 12px;
+        }
+
+        /* Status cards */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .status-card {
+            padding: 21px;
+            border: 1px solid #18344d;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #0c1c2d, #091522);
+        }
+
+        .status-card .label {
+            color: #607b94;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-value {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .ok {
+            color: #45d6b0;
+        }
+
+        .cyan {
+            color: #5acde8;
+        }
+
+        .muted {
+            color: #8ca1b3;
+        }
+
+        /* Main panel */
+        .panel {
+            border: 1px solid #19364f;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #091827;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 22px;
+            border-bottom: 1px solid #19334b;
+            background: #0b1b2b;
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .terminal-icon {
+            color: #38d4ae;
+            font-family: monospace;
+        }
+
+        .panel-meta {
+            color: #526d84;
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        /* File list */
+        .file-list {
+            padding: 7px 0;
+        }
+
+        .file-row {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(31, 60, 83, 0.55);
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .file-row:last-child {
+            border-bottom: none;
+        }
+
+        .file-row:hover {
+            background: rgba(38, 100, 133, 0.08);
+        }
+
+        .file-icon {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            background: #0d2436;
+            border: 1px solid #1b405b;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: monospace;
+            color: #70cce2;
+        }
+
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            color: #dceaf5;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .file-desc {
+            color: #58728a;
+            margin-top: 5px;
+            font-size: 11px;
+        }
+
+        .file-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-right: 15px;
+            color: #45d6b0;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .file-status .dot {
+            width: 6px;
+            height: 6px;
+            background: #45d6b0;
+            border-radius: 50%;
+        }
+
+        .download {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 13px;
+            color: #7ad5e8;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid #20506b;
+            border-radius: 6px;
+            background: #0a1e2e;
+            transition: all 0.2s;
+        }
+
+        .download:hover {
+            color: #06121e;
+            background: #54cde5;
+            border-color: #54cde5;
+        }
+
+        /* Notice */
+        .notice {
+            margin-top: 22px;
+            display: flex;
+            gap: 13px;
+            padding: 16px 18px;
+            border: 1px solid #263b4d;
+            background: rgba(11, 28, 43, 0.7);
+            border-radius: 8px;
+            color: #70889d;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .notice-icon {
+            color: #e2ad5c;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 45px;
+            padding-top: 20px;
+            border-top: 1px solid #152d42;
+            display: flex;
+            justify-content: space-between;
+            color: #435c72;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        footer code {
+            color: #52748e;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 0 18px;
+            }
+
+            main {
+                padding: 35px 16px;
+            }
+
+            .hero {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .case-id {
+                margin-top: 20px;
+                text-align: left;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .file-row {
+                flex-wrap: wrap;
+            }
+
+            .file-info {
+                width: calc(100% - 60px);
+            }
+
+            .file-status {
+                margin-left: 60px;
+                margin-right: auto;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="app">
+
+    <header>
+        <div class="brand">
+            <div class="shield">⬡</div>
+
+            <div class="brand-text">
+                <strong>SECURITY TEST PORTAL</strong>
+                <span>ENDPOINT SECURITY / MALWARE ANALYSIS</span>
+            </div>
+        </div>
+
+        <div class="header-status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+    </header>
+
+
+    <main>
+
+        <div class="breadcrumb">
+            SECURITY / ANTIVIRUS / TEST FILES
+        </div>
+
+        <section class="hero">
+            <div>
+                <h1>AntiVirus Test</h1>
+
+                <p>
+                    엔드포인트 보안 솔루션의 악성 파일 탐지 및
+                    CDR(Content Disarm & Reconstruction) 기능을 검증하기 위한 테스트 환경입니다.
+                </p>
+            </div>
+
+            <div class="case-id">
+                <small>TEST SESSION</small>
+                <code>AV-TEST-2026-0813</code>
+            </div>
+        </section>
+
+
+        <section class="status-grid">
+
+            <div class="status-card">
+                <div class="label">Environment</div>
+                <div class="status-value cyan">
+                    <span>●</span>
+                    Security Lab
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="label">AV Engine</div>
+                <div class="status-value ok">
+                    <span>●</span>
+                    Ready
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="label">Test Status</div>
+                <div class="status-value muted">
+                    <span>●</span>
+                    Awaiting Test
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="panel">
+
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span class="terminal-icon">&gt;_</span>
+                    Security Test Files
+                </div>
+
+                <div class="panel-meta">
+                    FILES / 05
+                </div>
+            </div>
+
+
+            <div class="file-list">
+
+                <!-- Hash -->
+                <div class="file-row">
+                    <div class="file-icon">HASH</div>
+
+                    <div class="file-info">
+                        <div class="file-name">test.txt</div>
+                        <div class="file-desc">
+                            Hash verification / integrity test
+                        </div>
+                    </div>
+
+                    <div class="file-status">
+                        <span class="dot"></span>
+                        TEST FILE
+                    </div>
+
+                    <a class="download" href="test.txt" download>
+                        ↓ DOWNLOAD
+                    </a>
+                </div>
+
+
+                <!-- Virus -->
+                <div class="file-row">
+                    <div class="file-icon">AV</div>
+
+                    <div class="file-info">
+                        <div class="file-name">Virus.txt</div>
+                        <div class="file-desc">
+                            Antivirus detection test sample
+                        </div>
+                    </div>
+
+                    <div class="file-status">
+                        <span class="dot"></span>
+                        MALWARE TEST
+                    </div>
+
+                    <a class="download" href="Virus.txt" download>
+                        ↓ DOWNLOAD
+                    </a>
+                </div>
+
+
+                <!-- PDF -->
+                <div class="file-row">
+                    <div class="file-icon">PDF</div>
+
+                    <div class="file-info">
+                        <div class="file-name">CDR.pdf</div>
+                        <div class="file-desc">
+                            CDR document sanitization test
+                        </div>
+                    </div>
+
+                    <div class="file-status">
+                        <span class="dot"></span>
+                        CDR TEST
+                    </div>
+
+                    <a class="download" href="CDR.pdf" download>
+                        ↓ DOWNLOAD
+                    </a>
+                </div>
+
+
+                <!-- XLSX -->
+                <div class="file-row">
+                    <div class="file-icon">XLS</div>
+
+                    <div class="file-info">
+                        <div class="file-name">CDR.xlsx</div>
+                        <div class="file-desc">
+                            Spreadsheet CDR processing test
+                        </div>
+                    </div>
+
+                    <div class="file-status">
+                        <span class="dot"></span>
+                        CDR TEST
+                    </div>
+
+                    <a class="download" href="CDR.xlsx" download>
+                        ↓ DOWNLOAD
+                    </a>
+                </div>
+
+
+                <!-- PPTX -->
+                <div class="file-row">
+                    <div class="file-icon">PPT</div>
+
+                    <div class="file-info">
+                        <div class="file-name">CDR.pptx</div>
+                        <div class="file-desc">
+                            Presentation CDR processing test
+                        </div>
+                    </div>
+
+                    <div class="file-status">
+                        <span class="dot"></span>
+                        CDR TEST
+                    </div>
+
+                    <a class="download" href="CDR.pptx" download>
+                        ↓ DOWNLOAD
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+
+        <div class="notice">
+            <div class="notice-icon">⚠</div>
+
+            <div>
+                <strong>SECURITY NOTICE</strong><br>
+                본 페이지의 파일은 보안 솔루션의 탐지 및 CDR 처리 기능 검증을 위한
+                테스트 목적으로만 사용하십시오. 테스트 파일 다운로드 및 실행은
+                승인된 테스트 환경에서 수행하는 것을 권장합니다.
+            </div>
+        </div>
+
+
+        <footer>
+            <span>INTERNAL SECURITY TEST ENVIRONMENT</span>
+            <code>SEC-PORTAL / AV-CDR / v1.0</code>
+        </footer>
+
+    </main>
+</div>
 </body>
 </html>
