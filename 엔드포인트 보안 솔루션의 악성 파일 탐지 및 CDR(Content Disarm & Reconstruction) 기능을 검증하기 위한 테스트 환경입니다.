@@ -18,7 +18,7 @@
                 -apple-system,
                 BlinkMacSystemFont,
                 sans-serif;
-            background: #07111f;
+            background: #0b1a2a;
             color: #d9e7f5;
             min-height: 100vh;
         }
@@ -49,7 +49,7 @@
             justify-content: space-between;
             padding: 0 42px;
             border-bottom: 1px solid #183049;
-            background: rgba(5, 15, 28, 0.92);
+            background: rgba(9, 24, 39, 0.95);
             backdrop-filter: blur(10px);
         }
 
@@ -173,7 +173,7 @@
             padding: 21px;
             border: 1px solid #18344d;
             border-radius: 10px;
-            background: linear-gradient(145deg, #0c1c2d, #091522);
+            background: linear-gradient(145deg, #11263a, #0e2032);
         }
 
         .status-card .label {
@@ -209,7 +209,7 @@
             border: 1px solid #19364f;
             border-radius: 12px;
             overflow: hidden;
-            background: #091827;
+            background: #102438;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         }
 
@@ -219,7 +219,7 @@
             justify-content: space-between;
             padding: 18px 22px;
             border-bottom: 1px solid #19334b;
-            background: #0b1b2b;
+            background: #142b40;
         }
 
         .panel-title {
@@ -269,7 +269,7 @@
             display: grid;
             place-items: center;
             border-radius: 8px;
-            background: #0d2436;
+            background: #15334a;
             border: 1px solid #1b405b;
             font-size: 11px;
             font-weight: 700;
@@ -423,7 +423,7 @@
 
             <div class="brand-text">
                 <strong>SECURITY TEST PORTAL</strong>
-                <span>ENDPOINT SECURITY / MALWARE ANALYSIS</span>
+                <span>Firewall Function Test</span>
             </div>
         </div>
 
@@ -437,23 +437,18 @@
     <main>
 
         <div class="breadcrumb">
-            SECURITY / ANTIVIRUS / TEST FILES
+            ANTIVIRUS / TEST FILES
         </div>
 
         <section class="hero">
             <div>
-                <h1>AntiVirus Test</h1>
+                <h1>AntiVirus</h1>
 
                 <p>
-                    엔드포인트 보안 솔루션의 악성 파일 탐지 및
-                    CDR(Content Disarm & Reconstruction) 기능을 검증하기 위한 테스트 환경입니다.
+                    방화벽 Security Profiles 의 AntiVirus 기능을 검증하기 위한 테스트 파일들입니다.
                 </p>
             </div>
 
-            <div class="case-id">
-                <small>TEST SESSION</small>
-                <code>AV-TEST-2026-0813</code>
-            </div>
         </section>
 
 
@@ -507,7 +502,7 @@
                     <div class="file-icon">HASH</div>
 
                     <div class="file-info">
-                        <div class="file-name">test.txt</div>
+                        <div class="file-name">Hash.txt</div>
                         <div class="file-desc">
                             Hash verification / integrity test
                         </div>
@@ -515,10 +510,10 @@
 
                     <div class="file-status">
                         <span class="dot"></span>
-                        TEST FILE
+                        Hash FILE
                     </div>
 
-                    <a class="download" href="test.txt" download>
+                    <a class="download" href="Hash.txt" download>
                         ↓ DOWNLOAD
                     </a>
                 </div>
